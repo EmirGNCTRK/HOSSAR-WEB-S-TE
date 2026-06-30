@@ -1924,4 +1924,57 @@ h2 {
         padding: 8px 12px;
         font-size: 16px; /* Mobilde okları biraz küçült */
     }
+    /* MOBİL ALT MENÜ KESİN SIFIRLAMA */
+    .main-nav .dropdown-menu {
+        display: none !important; /* Tarayıcının masaüstü ayarlarını ezmesi için !important şart */
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: static !important;
+        background-color: #141414 !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 5px 0 0 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        transform: none !important;
+        overflow: hidden !important;
+    }
+
+    /* JavaScript 'open' sınıfını eklediğinde alt menüyü görünür yap */
+    .main-nav .dropdown.open .dropdown-menu {
+        display: block !important;
+    }
+
+    /* Alt Kategorilerin Yazı ve Boşluk Düzeni (Zarif ve Tıklanabilir) */
+    .main-nav .dropdown-menu li {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .main-nav .dropdown-menu a {
+        font-size: 13px !important; /* Ana başlıklardan daha küçük ve kibar */
+        color: #888888 !important; /* Hafif sönük gri */
+        padding: 10px 15px !important; /* Tıklama alanını rahatlatacak iç boşluk */
+        text-transform: uppercase !important;
+        border-left: 2px solid transparent;
+        transition: all 0.3s ease !important;
+    }
+
+    /* Alt kategorinin üzerine gelince veya aktifken */
+    .main-nav .dropdown-menu a:hover {
+        color: var(--accent-tactical) !important;
+        border-left: 2px solid var(--accent-tactical);
+        background-color: #1a1a1a !important;
+    }
+
+    /* Ana başlıktaki küçük ok (▾) animasyonu */
+    .dropdown .arrow {
+        display: inline-block !important;
+        transition: transform 0.3s ease !important;
+    }
+    .dropdown.open .arrow {
+        transform: rotate(180deg) !important; /* Açılınca yukarı baksın */
+    }
+
 }

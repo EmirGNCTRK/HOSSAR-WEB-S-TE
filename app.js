@@ -1,61 +1,94 @@
-// Header Kaydırma Efekti (Mevcut kodun)
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.site-header');
-    if (window.scrollY > 50) {
-        header.style.padding = '12px 0';
-        header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
-    } else {
-        header.style.padding = '20px 0';
-        header.style.boxShadow = 'none';
-    }
-});
+// ==========================================================================
+// HOSSAR TACTICAL - NİHAİ UNIFIED APPLICATION SCRIPT (DÜZELTİLMİŞ)
+// ==========================================================================
 
-// Arka Plan Fotoğraf Değişim Otomasyonu (Slider)
-const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
-const slideInterval = 4000; // 4 saniyede bir değişir (milisaniye cinsinden)
+document.addEventListener('DOMContentLoaded', function() {
 
-function nextSlide() {
-    // Aktif olan slidedan 'active' sınıfını kaldır
-    slides[currentSlide].classList.remove('active');
+    // --- 1. GELİŞMİŞ SAYFA GEÇİŞ VE PRELOADER OTOMASYONU ---
+    const preloader = document.getElementById('preloader');
     
-    // Bir sonraki slayda geç (Son slayda gelindiyse başa dön)
-    currentSlide = (currentSlide + 1) % slides.length;
-    
-    // Yeni slayda 'active' sınıfını ekle
-    slides[currentSlide].classList.add('active');
-}
+    // Sayfa tamamen yüklendiğinde preloader'ı kapat
+    window.addEventListener('load', function() {
+        if (preloader) {
+            preloader.classList.add('fade-out');
+            setTimeout(() => { preloader.style.display = 'none'; }, 500);
+        }
+    });
 
-// Döngüyü başlatıyoruz
-setInterval(nextSlide, slideInterval);
+    // Her ihtimale karşı load gecikirse diye 1.5 saniyelik yedek kapatıcı
+    setTimeout(() => {
+        if (preloader && !preloader.classList.contains('fade-out')) {
+            preloader.classList.add('fade-out');
+            setTimeout(() => { preloader.style.display = 'none'; }, 500);
+        }
+    }, 1500);
 
-// --- ÜRÜN DETAY SAYFASI GALERİ OTOMASYONU ---
-// Sayfada galeri elementleri var mı kontrol et (Hata vermemesi için)
-const mainImg = document.getElementById('current-product-img');
-const thumbnails = document.querySelectorAll('.thumb-box');
-
-if (mainImg && thumbnails.length > 0) {
-    thumbnails.forEach(thumb => {
-        thumb.addEventListener('click', function() {
-            // 1. Tıklanan kutunun içindeki resmin yolunu (src) al
-            const targetSrc = this.querySelector('img').getAttribute('src');
-            
-            // 2. Ana resmin yolunu bu yeni yolla değiştir
-            mainImg.setAttribute('src', targetSrc);
-            
-            // 3. Diğer tüm kutulardan 'active' sınıfını kaldır
-            thumbnails.forEach(box => box.classList.remove('active'));
-            
-            // 4. Sadece tıklanan kutuya 'active' sınıfını ekle
-            this.classList.add('active');
+    // Çıkış Animasyonu: Bir iç linke tıklandığında preloader'ı aç
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript') && this.target !== '_blank') {
+                e.preventDefault();
+                if (preloader) {
+                    preloader.style.display = 'flex';
+                    setTimeout(() => { preloader.classList.remove('fade-out'); }, 10);
+                }
+                setTimeout(() => { window.location.href = href; }, 250);
+            }
         });
     });
-}
 
-// ==========================================================================
-// --- ÜRÜN DETAY ENTEGRE GALERİ, OKLAR, BÜYÜTEÇ VEYA LIGHTBOX MİMARİSİ ---
-// ==========================================================================
-document.addEventListener('DOMContentLoaded', function() {
+
+    // --- 2. MOBİL HAMBURGER VE AKORDEON MENÜ OTOMASYONU ---
+    const menuToggle = document.getElementById('mobile-menu');
+    const mainNav = document.querySelector('.main-nav');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdown = document.querySelector('.dropdown');
+
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            if (!mainNav.classList.contains('active') && dropdown) {
+                dropdown.classList.remove('open');
+            }
+        });
+    }
+
+    // Hem Masaüstü hem Mobilde "Ürünlerimiz" Tıklama Kontrolü
+    if (dropdownToggle && dropdown) {
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+        });
+    }
+
+    // Menü açıkken ekranda boş bir yere tıklanırsa kapatma güvenliği
+    document.addEventListener('click', function() {
+        if (mainNav && mainNav.classList.contains('active')) {
+            if (menuToggle) menuToggle.classList.remove('active');
+            mainNav.classList.remove('active');
+            if (dropdown) dropdown.classList.remove('open');
+        }
+    });
+
+
+    // --- 3. ANA SAYFA HERO SLIDER ---
+    const slides = document.querySelectorAll('.hero-slider .slide');
+    if (slides.length > 0) {
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000); // 5 saniyede bir değişim (Önceki 500ms çok hızlıydı, 5000ms yaptık)
+    }
+
+
+    // --- 4. ÜRÜN DETAY GALERİ, OKLAR, BÜYÜTEÇ VE LIGHTBOX SİSTEMİ ---
     const zoomContainer = document.querySelector('.zoom-container');
     const mainImg = document.getElementById('current-product-img');
     const thumbnails = document.querySelectorAll('.thumb-box');
@@ -65,180 +98,85 @@ document.addEventListener('DOMContentLoaded', function() {
     const lightboxImg = document.getElementById('lightbox-img');
     const closeLightbox = document.getElementById('close-lightbox-btn');
 
-    if (!mainImg || thumbnails.length === 0) return;
+    if (mainImg && thumbnails.length > 0) {
+        const imgList = Array.from(thumbnails).map(thumb => thumb.querySelector('img').getAttribute('src'));
+        let currentIndex = 0;
 
-    // Küçük resimlerin yollarını bir diziye (array) aktarıyoruz
-    const imgList = Array.from(thumbnails).map(thumb => thumb.querySelector('img').getAttribute('src'));
-    let currentIndex = 0;
+        function updateGallery(index) {
+            currentIndex = index;
+            mainImg.setAttribute('src', imgList[currentIndex]);
+            thumbnails.forEach((box, i) => {
+                if (i === currentIndex) box.classList.add('active');
+                else box.classList.remove('active');
+            });
+        }
 
-    // Resmi ve aktif kutuyu güncelleyen ortak fonksiyon
-    function updateGallery(index) {
-        currentIndex = index;
-        mainImg.setAttribute('src', imgList[currentIndex]);
-        
-        thumbnails.forEach((box, i) => {
-            if (i === currentIndex) box.classList.add('active');
-            else box.classList.remove('active');
+        // Milimetrik Fare Zoom Takibi (PC)
+        if (zoomContainer) {
+            zoomContainer.addEventListener('mousemove', function(e) {
+                if (window.innerWidth > 992) {
+                    const rect = zoomContainer.getBoundingClientRect();
+                    const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
+                    const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+                    mainImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+                }
+            });
+            zoomContainer.addEventListener('mouseleave', function() {
+                mainImg.style.transformOrigin = 'center center';
+            });
+        }
+
+        // Ok Tuşları (VS Code Hatasına Sebep Olan Parantez Burada Düzeltildi)
+        if (nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                updateGallery((currentIndex + 1) % imgList.length);
+            });
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                updateGallery((currentIndex - 1 + imgList.length) % imgList.length);
+            });
+        }
+
+        // Thumbnail Tıklamaları
+        thumbnails.forEach((thumb, index) => {
+            thumb.addEventListener('click', function() { updateGallery(index); });
         });
-    }
 
-    // ----------------------------------------------------------------------
-    // 1. MOUSE ZOOM (BÜYÜTEÇ) KODLARI (Milimetrik Koordinat Takibi)
-    // ----------------------------------------------------------------------
-    if (zoomContainer && mainImg) {
-        zoomContainer.addEventListener('mousemove', function(e) {
-            // Sadece bilgisayar ekranlarındayken (992px üstü) büyüteç çalışsnsın
-            if (window.innerWidth > 992) {
-                const rect = zoomContainer.getBoundingClientRect();
-                
-                // Sayfa kaydırılsa bile farenin kutu içindeki tam yerini hesaplar
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Koordinatları yüzdeye (0% - 100% arası) çeviriyoruz
-                const xPercent = (x / rect.width) * 100;
-                const yPercent = (y / rect.height) * 100;
-                
-                // Büyüme odağını farenin milimetrik olarak durduğu yere eşitliyoruz
-                mainImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+        // Mobil Lightbox Açılışı
+        mainImg.addEventListener('click', function() {
+            if (window.innerWidth <= 992 && lightbox && lightboxImg) {
+                lightboxImg.setAttribute('src', this.getAttribute('src'));
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             }
         });
 
-        // Fare kutudan çıkınca resmi eski normal merkezine döndür
-        zoomContainer.addEventListener('mouseleave', function() {
-            mainImg.style.transformOrigin = 'center center';
-        });
-    }
-
-    // ----------------------------------------------------------------------
-    // 2. SAĞ VE SOL OK TUŞLARI TETİKLEYİCİLERİ
-    // ----------------------------------------------------------------------
-    if (nextBtn && prevBtn) {
-        nextBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Tıklamanın arkadaki Lightbox'ı açmasını engeller
-            let nextIndex = (currentIndex + 1) % imgList.length;
-            updateGallery(nextIndex);
-        });
-
-        prevBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Tıklamanın arkadaki Lightbox'ı açmasını engeller
-            let prevIndex = (currentIndex - 1 + imgList.length) % imgList.length;
-            updateGallery(prevIndex);
-        });
-    }
-
-    // Küçük resimlere (thumbnails) tıklayınca değişim
-    thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener('click', function() {
-            updateGallery(index);
-        });
-    });
-
-    // ----------------------------------------------------------------------
-    // 3. MOBİL LIGHTBOX (TAM EKRAN PENCERE)
-    // ----------------------------------------------------------------------
-    mainImg.addEventListener('click', function() {
-        // Eğer ekran mobil boyuttaysa (992px ve altı) lightbox'ı aç
-        if (window.innerWidth <= 992) {
-            lightboxImg.setAttribute('src', this.getAttribute('src'));
-            lightbox.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Arka plan kaymasını engelle
-        }
-    });
-
-    if (closeLightbox && lightbox) {
-        // X butonuna basınca kapat
-        closeLightbox.addEventListener('click', function() {
-            lightbox.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Kaymayı geri aç
-        });
-
-        // Siyah arka plana basınca da kapat
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
+        // Lightbox Kapatma
+        if (closeLightbox && lightbox) {
+            closeLightbox.addEventListener('click', function() {
                 lightbox.style.display = 'none';
                 document.body.style.overflow = 'auto';
-            }
-        });
+            });
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
     }
-});
-// --- MOBİL HAMBURGER MENÜ OTOMASYONU ---
-const menuToggle = document.getElementById('mobile-menu');
-const mainNav = document.querySelector('.main-nav');
 
-if (menuToggle && mainNav) {
-    menuToggle.addEventListener('click', function() {
-        // Butonu ve menüyü aktif/pasif yap (Sağdan içeri kaydırır)
-        this.classList.toggle('active');
-        mainNav.classList.toggle('active');
-    });
-}
-
-// Mobilde "Ürünlerimiz" yazısına tıklayınca alt menünün açılması
-const dropdownToggle = document.querySelector('.dropdown-toggle');
-const dropdown = document.querySelector('.dropdown');
-
-if (dropdownToggle && dropdown) {
-    dropdownToggle.addEventListener('click', function(e) {
-        // Eğer ekran mobil boyuttaysa normal link gitmesini engelle, alt menüyü aç
-        if (window.innerWidth <= 992) {
-            e.preventDefault();
-            dropdown.classList.toggle('open');
+    // --- 5. HEADER SCROLL GÖLGE EFEKTİ ---
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.site-header');
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
         }
     });
-}
-// Header'ın kaydırma esnasında gölge kazanması efekti
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.site-header');
-    if (window.scrollY > 50) {
-        header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
-    } else {
-        header.style.boxShadow = 'none';
-    }
-});
-// --- PRELOADER (YÜKLEME EKRANI) OTOMASYONU ---
-// --- GELİŞMİŞ SAYFA GEÇİŞ VE PRELOADER OTOMASYONU ---
 
-// 1. Sayfa İlk Açıldığında Yükleme Ekranını Kapatma (Giriş)
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.classList.add('fade-out');
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500);
-    }
-});
-
-// 2. Bir Linke Tıklandığında Sayfadan Ayrılmadan Önce Yükleme Ekranını Açma (Çıkış)
-document.addEventListener('DOMContentLoaded', function() {
-    const preloader = document.getElementById('preloader');
-    
-    // Sitedeki tüm iç linkleri buluyoruz
-    const links = document.querySelectorAll('a');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            // Eğer tıklandığında sayfa dışına giden gerçek bir linkse ve sayfa içi pencerelere (#) gitmiyorsa
-            if (href && !href.startsWith('#') && !href.startsWith('javascript') && this.target !== '_blank') {
-                
-                // Varsayılan sayfa geçişini saliseliğine durdur
-                e.preventDefault();
-                
-                // Yükleme ekranını tekrar görünür yap ve beyazlığı aç
-                preloader.style.display = 'flex';
-                // Küçük bir gecikmeyle görünürlük efektini (opacity) tetikle
-                setTimeout(() => {
-                    preloader.classList.remove('fade-out');
-                }, 10);
-                
-                // Çeyrek saniye (250ms) sonra yeni sayfaya yönlendir (Bu sırada kullanıcı halkanın döndüğünü görecek)
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 250); 
-            }
-        });
-    });
 });
