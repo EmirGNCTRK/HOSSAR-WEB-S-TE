@@ -316,13 +316,158 @@ h2 {
     font-size: 14px;
 }
 
-/* Mobil Uumluluk (SEO için kritik) */
-@media (max-width: 768px) {
-    .header-wrap { flex-direction: column; gap: 15px; }
-    .main-nav ul { gap: 15px; }
-    .hero-section h1 { font-size: 38px; }
-    .grid-blocks, .grid-two-col { grid-template-columns: 1fr; }
-    .hero-actions { flex-direction: column; }
+/* ==========================================================================
+   MOBİL ÖZEL DÜZEN VE İNCE HEADER AYARLARI (Maksimum 992px)
+   ========================================================================== */
+@media (max-width: 992px) {
+    /* Header yüksekliğini 55px olarak inceltiyoruz ve iç boşlukları sıfırlıyoruz */
+    .header-wrap {
+        padding: 0 !important;
+        height: 55px !important; 
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* Hamburger Menü Butonunu SOLA alıyoruz */
+    .menu-toggle {
+        display: flex !important;
+        order: 1 !important; /* İlk sırada (solda) yer almasını sağlar */
+        margin-left: 15px !important; /* Sol kenardan şık bir boşluk */
+    }
+
+    /* Logoyu SAĞA alıyoruz */
+    .logo {
+        order: 2 !important; /* İkinci sırada (sağda) yer almasını sağlar */
+        margin-right: 15px !important; /* Sağ kenardan şık bir boşluk */
+    }
+
+    /* İncelen header yapısına göre logonun ve linkin yüksekliğini eşitliyoruz */
+    .logo, .logo a {
+        height: 55px !important; /* İnce header yüksekliği ile sıfıra sıfır */
+    }
+
+    .header-logo-img {
+        height: 100% !important; /* 55px'lik yeni ince header'ı tamamen kaplar */
+        width: auto !important;
+        object-fit: contain !important; /* Logonun mobilde kesilmesini engeller */
+    }
+
+    /* Menü panelinin açılış hizasını yeni ince header'a göre (55px) ayarlıyoruz */
+    .main-nav {
+        position: fixed !important;
+        top: 55px !important; /* İnce header'ın hemen altı */
+        right: -100% !important; /* Başlangıçta ekranın sağ dışında gizli */
+        width: 280px !important; /* Genişliği sabitleyerek daha zarif bir panel yaptık */
+        height: calc(100vh - 55px) !important;
+        background-color: rgba(14, 14, 14, 0.98) !important; /* Bir tık daha koyu ve elit bir siyah */
+        border-left: 1px solid #2a2a2a !important; /* Kalın gold çizgi yerine ince antrasit çizgi */
+        padding: 40px 25px !important;
+        
+        /* Sağdan sola yumuşak ve kararlı kayma efekti (cubic-bezier) */
+        transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; 
+        z-index: 1000 !important;
+    }
+
+    /* Menü aktif olduğunda içeri kayma tetikleyicisi */
+    .main-nav.active {
+        right: 0 !important; /* Ekranın sağ kenarına sıfırlanarak görünür olur */
+    }
+
+    /* Hamburger Menü Animasyonu Çizgi Hizalaması (İnce header için optimize edildi) */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Menü Link Düzenleri */
+    .main-nav ul {
+        flex-direction: column !important;
+        gap: 18px !important; /* Linklerin arasındaki boşluğu biraz daralttık */
+        align-items: flex-start !important;
+    }
+
+    .main-nav a {
+        font-family: var(--font-body) !important; /* Oswald yerine daha zarif olan Roboto fontuna çektik */
+        font-size: 15px !important; /* Yazı boyutunu küçülttük */
+        font-weight: 400 !important; /* Yazı kalınlığını incelttik (Regular) */
+        letter-spacing: 0.5px !important; /* Harf arası boşluğu kibarlaştırdık */
+        color: #b0b0b0 !important; /* Saf beyaz yerine gözü yormayan açık gri */
+        text-transform: uppercase; /* Kurumsallığı korumak için büyük harf bıraktık */
+        transition: color 0.3s ease !important;
+        width: 100%;
+        display: block;
+    }
+    /* Menü linkine basınca veya aktifken çöl rengine pürüzsüz geçiş */
+    .main-nav a:hover, 
+    .main-nav a.active {
+        color: var(--accent-tactical) !important;
+    }
+
+    /* Mobilde açılır alt menü başlıklarının da zarif durması için */
+    .dropdown-menu a {
+        font-size: 13px !important; /* Alt menü yazılarını bir tık daha küçük yaptık */
+        padding: 8px 15px !important;
+        color: var(--text-muted) !important;
+    }
+
+    /* Sayfa Düzenleri (Grid Yapıları Alt Alta) */
+    .grid-two-col, 
+    .product-detail-grid, 
+    .catalog-layout, 
+    .service-row, 
+    .service-row.inverse {
+        grid-template-columns: 1fr !important;
+        gap: 35px !important;
+        direction: ltr !important;
+    }
+
+    /* Mobil Başlıklar */
+    .hero-section h1 {
+        font-size: 34px !important;
+    }
+    h2 {
+        font-size: 26px !important;
+    }
+
+    .products-grid, 
+    .category-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+
+    .catalog-sidebar {
+        position: static !important;
+        width: 100% !important;
+    }
+    
+    .service-img-col {
+        order: 2 !important;
+        height: 280px !important;
+    }
+}
+
+/* CEP TELEFONLARI İÇİN (Maksimum 576px) */
+@media (max-width: 576px) {
+    .products-grid, 
+    .category-products-grid, 
+    .about-values-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-section {
+        padding: 110px 0 50px 0 !important; /* İnce header için üst boşluğu daralttık */
+    }
+
+    .product-img-box, 
+    .cat-product-img {
+        height: 250px !important;
+    }
 }
 
 /* ... Önceki CSS Kodlarının Devamı (Aynen Kalacak) ... */
@@ -1561,5 +1706,45 @@ h2 {
     }
     .intro-text {
         font-size: 15px;
+    }
+}
+/* --- Ürün Detay Kategori Yolağı (Breadcrumb) Tasarımı --- */
+
+.product-breadcrumb {
+    font-size: 13px;
+    font-family: var(--font-body);
+    letter-spacing: 0.5px;
+    margin-bottom: 5px; /* Resme çok yapışmaması için küçük bir boşluk */
+    text-transform: uppercase;
+}
+
+.product-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Üzerine gelince markanın çöl rengini alsın */
+.product-breadcrumb a:hover {
+    color: var(--accent-tactical);
+}
+
+/* Aradaki bölme işareti ( / ) için renk ayarı */
+.product-breadcrumb .separator {
+    color: #444;
+    margin: 0 8px;
+}
+
+/* Şu an aktif olan kategorinin bir tık daha belirgin durması için */
+.product-breadcrumb .current-category {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Mobilde de ince header'ın altında şık durması için hizalama */
+@media (max-width: 992px) {
+    .product-breadcrumb {
+        font-size: 12px;
+        margin-bottom: 8px;
     }
 }
