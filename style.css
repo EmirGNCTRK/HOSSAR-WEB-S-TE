@@ -1876,6 +1876,9 @@ h2 {
     max-width: 100%;
     max-height: 85vh;
     object-fit: contain;
+    
+    /* Mobilde resim üzerinde parmak hareketlerine ve tarayıcının kendi zoom yeteneğine izin ver */
+    touch-action: pinch-zoom; 
 }
 
 /* Kapatma Butonu (Sağ Üstteki X) */
@@ -1903,7 +1906,8 @@ h2 {
     object-fit: contain;
     transition: transform 0.1s ease-out; /* Hareketin yumuşak akması için */
     transform-origin: center center;
-    pointer-events: none; /* KRİTİK: Farenin resme çarpıp koordinat hesaplamasını bozmasını engeller */
+    /* pointer-events: none;  */
+    /* KRİTİK: Farenin resme çarpıp koordinat hesaplamasını bozmasını engeller */
 }
 
 /* Bilgisayarda fare üzerine gelince 2 kat büyüt */

@@ -116,8 +116,14 @@ document.addEventListener('DOMContentLoaded', function() {
             zoomContainer.addEventListener('mousemove', function(e) {
                 if (window.innerWidth > 992) {
                     const rect = zoomContainer.getBoundingClientRect();
-                    const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
-                    const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    // e.clientX yerine pageX kullanarak resmin kendi üzerindeki kaymaları da deaktif ediyoruz
+                    const x = (e.pageX - window.scrollX) - rect.left;
+                    const y = (e.pageY - window.scrollY) - rect.top;
+                    
+                    const xPercent = (x / rect.width) * 100;
+                    const yPercent = (y / rect.height) * 100;
+                    
                     mainImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
                 }
             });
@@ -126,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Ok Tuşları (VS Code Hatasına Sebep Olan Parantez Burada Düzeltildi)
+        // Ok Tuşları
         if (nextBtn && prevBtn) {
             nextBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -143,25 +149,48 @@ document.addEventListener('DOMContentLoaded', function() {
             thumb.addEventListener('click', function() { updateGallery(index); });
         });
 
-        // Mobil Lightbox Açılışı
-        mainImg.addEventListener('click', function() {
-            if (window.innerWidth <= 992 && lightbox && lightboxImg) {
-                lightboxImg.setAttribute('src', this.getAttribute('src'));
-                lightbox.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        });
-
-        // Lightbox Kapatma
-        if (closeLightbox && lightbox) {
-            closeLightbox.addEventListener('click', function() {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = 'auto';
+        // --- AKILLI MOBİL ZOOM VE LIGHTBOX MİMARİSİ ---
+        const viewportMeta = document.querySelector('meta[name="viewport"]');
+        
+        // 1. Resme tıklanınca Lightbox'ı aç ve ZOOM İZNİ VER
+        if (zoomContainer) {
+            zoomContainer.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('nav-arrow') && window.innerWidth <= 992 && lightbox && lightboxImg && mainImg) {
+                    lightboxImg.setAttribute('src', mainImg.getAttribute('src'));
+                    lightbox.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Arka plan kaymasını engelle
+                    
+                    // Resim açıldı, tarayıcıya zoom yapma izni veriyoruz
+                    if (viewportMeta) {
+                        viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
+                    }
+                }
             });
+        }
+
+        // 2. Çarpı (X) işaretine basınca kapat ve ZOOM YASAĞINI GERİ GETİR
+        if (closeLightbox && lightbox) {
+            closeLightbox.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Sayfa kaydırmasını geri aç
+                
+                // Resim kapandı, siteyi tekrar sabit ve zoom yapılamaz hale getiriyoruz
+                if (viewportMeta) {
+                    viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                }
+            });
+
+            // 3. Siyah boş arka plana basınca da kapat ve ZOOM YASAĞINI GERİ GETİR
             lightbox.addEventListener('click', function(e) {
                 if (e.target === lightbox) {
                     lightbox.style.display = 'none';
                     document.body.style.overflow = 'auto';
+                    
+                    if (viewportMeta) {
+                        viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                    }
                 }
             });
         }
