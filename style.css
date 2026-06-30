@@ -1,0 +1,305 @@
+/* Taktiksel Renk Paleti ve Reset Ayarları */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #121212;
+    --bg-surface: #1a1a1a;
+    --accent-tactical: #C39B62; /* Ambalajdaki çöl/altın tonu */
+    --accent-green: #4A5D4E;    /* Askeri yeşil */
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Tasarımı */
+.site-header {
+    background-color: rgba(18, 18, 18, 0.95);
+    border-bottom: 1px solid #2a2a2a;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.logo-sub {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--accent-tactical);
+    margin-left: 5px;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--accent-tactical);
+}
+
+/* Buton Tasarımları */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--accent-tactical);
+    color: #121212;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #dfb274;
+}
+
+.btn-outline {
+    border: 1px solid var(--text-muted);
+    color: #fff;
+}
+
+.btn-outline:hover {
+    border-color: var(--accent-tactical);
+    color: var(--accent-tactical);
+}
+
+/* Hero Section (Giriş Alanı) */
+.hero-section {
+    padding: 180px 0 100px 0;
+    background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 1)), url('hero-bg.jpg') no-repeat center center/cover;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.hero-tag {
+    color: var(--accent-tactical);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-size: 14px;
+}
+
+.hero-section h1 {
+    font-family: var(--font-heading);
+    font-size: 56px;
+    line-height: 1.1;
+    margin: 15px 0;
+    color: #fff;
+}
+
+.hero-section .highlight {
+    color: transparent;
+    -webkit-text-stroke: 1px #fff; /* Taktiksel içi boş modern başlık efekti */
+}
+
+.hero-section p {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/* Blok ve Tanıtım Alanı (Koleksiyon) */
+.collection-section {
+    padding: 100px 0;
+    background-color: var(--bg-surface);
+}
+
+.section-title-wrap {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.subtitle {
+    color: var(--accent-tactical);
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    font-size: 14px;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.grid-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.category-block {
+    background-color: #222;
+    height: 400px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    border: 1px solid #2a2a2a;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Fotoğraftaki ambalaj tasarımlarının renk havasını bloklara veriyoruz */
+.block-duty { border-left: 4px solid #333; }
+.block-tactical { border-left: 4px solid var(--accent-tactical); }
+.block-outdoor { border-left: 4px solid var(--accent-green); }
+
+.category-block:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-tactical);
+}
+
+.block-content {
+    position: relative;
+    z-index: 2;
+}
+
+.block-badge {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    color: rgba(255,255,255,0.05);
+    position: absolute;
+    top: -50px;
+    left: 0;
+    font-weight: bold;
+}
+
+.category-block h3 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.category-block p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.block-link {
+    color: var(--accent-tactical);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+/* Özellikler Alanı */
+.features-section {
+    padding: 100px 0;
+}
+
+.grid-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.feature-list {
+    list-style: none;
+    margin-top: 30px;
+}
+
+.feature-list li {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent-tactical);
+}
+
+.image-placeholder {
+    background-color: var(--bg-surface);
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    border: 1px dashed #333;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #0d0d0d;
+    padding: 40px 0;
+    border-top: 1px solid #1a1a1a;
+}
+
+.footer-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Mobil Uumluluk (SEO için kritik) */
+@media (max-width: 768px) {
+    .header-wrap { flex-direction: column; gap: 15px; }
+    .main-nav ul { gap: 15px; }
+    .hero-section h1 { font-size: 38px; }
+    .grid-blocks, .grid-two-col { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; }
+}
