@@ -1018,3 +1018,111 @@ h2 {
 .zoom-container:hover img {
     transform: scale(2);
 }
+/* --- Hizmetler Sayfası Asimetrik CSS Kuralları --- */
+
+.services-hero {
+    padding: 160px 0 60px 0;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid #1a1a1a;
+    text-align: center;
+}
+
+.services-sub-desc {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 15px auto 0 auto;
+    font-size: 16px;
+}
+
+.services-list-section {
+    padding: 60px 0;
+}
+
+/* Her Bir Hizmet Satırı */
+.service-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Eşit sütun (Metin ve Görsel) */
+    gap: 80px;
+    align-items: center;
+    padding: 60px 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+/* Son satırın altındaki çizgiyi kaldırıyoruz */
+.service-row:last-child {
+    border-bottom: none;
+}
+
+/* Sıra Numarası (01, 02 vb.) */
+.service-num {
+    font-family: var(--font-heading);
+    font-size: 45px;
+    font-weight: 700;
+    color: var(--accent-tactical);
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.service-text-col h3 {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.service-text-col p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Görsel Hücresi ve Çerçevesi */
+.service-img-col {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    padding: 15px;
+    height: 380px; /* Sabit pencereli modern görünüm */
+    overflow: hidden;
+}
+
+.service-img-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.2); /* Hafif soluk askeri ton */
+    transition: all 0.4s ease;
+}
+
+.service-row:hover .service-img-col img {
+    filter: grayscale(0);
+    transform: scale(1.03);
+}
+
+/* --- ASİMETRİK / ZEBRA SİHİRBAZI --- */
+/* Çift numaralı satırlarda (2. satır gibi) görsel sola, metin sağa geçsin */
+.service-row.inverse {
+    direction: rtl; /* Okuma/Yerleşim yönünü tersine çevirir */
+}
+
+/* İçerideki yazıların sola dayalı kalması için yönü tekrar düzeltiyoruz */
+.service-row.inverse .service-text-col,
+.service-row.inverse .service-img-col {
+    direction: ltr; 
+}
+
+/* --- Mobil Ekran Uyumluluğu --- */
+@media (max-width: 992px) {
+    .service-row, .service-row.inverse {
+        grid-template-columns: 1fr; /* Mobilde her şey tek sütun alt alta */
+        gap: 40px;
+        direction: ltr !important; /* Mobilde ters dönme kuralını iptal et */
+        padding: 40px 0;
+    }
+    
+    .service-img-col {
+        height: 280px;
+        order: 2; /* Mobilde görsel her zaman metnin altında kalsın */
+    }
+}
