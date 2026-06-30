@@ -1126,3 +1126,345 @@ h2 {
         order: 2; /* Mobilde görsel her zaman metnin altında kalsın */
     }
 }
+/* --- Sol Menülü Katalog Sayfası CSS Ayarları --- */
+
+.catalog-content-section {
+    padding: 60px 0;
+}
+
+/* Sayfayı Sol (Sidebar) ve Sağ (Ürünler) Olarak Bölen Ana Düzen */
+.catalog-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Sol menü sabit 280px, sağ taraf kalan tüm alan */
+    gap: 40px;
+    align-items: start;
+}
+
+/* Sol Menü Kutusu (Sidebar) */
+.catalog-sidebar {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    border-top: 3px solid var(--accent-tactical); /* Üst kısma imza çizgimiz */
+    padding: 25px 20px;
+    position: sticky;
+    top: 100px; /* Sayfa kaydırıldıkça menünün yukarıda sabit kalmasını sağlar */
+}
+
+.catalog-sidebar h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 10px;
+}
+
+/* Yan Menü Link Listesi */
+.sidebar-menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-menu-list a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 15px;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: space-between; /* Yazıyı sola, ürün sayısını sağa yaslar */
+    align-items: center;
+    padding: 8px 10px;
+    border-left: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+/* Yan menü linklerine hover olunca veya aktifken */
+.sidebar-menu-list a:hover, 
+.sidebar-menu-list a.active {
+    color: #fff;
+    background-color: #222;
+    border-left-color: var(--accent-tactical);
+    padding-left: 15px;
+}
+
+/* Ürün Sayıları Bilgisi (count) */
+.sidebar-menu-list .count {
+    font-size: 12px;
+    color: var(--accent-tactical);
+    font-family: var(--font-heading);
+}
+
+/* Sağ Taraf Ürün Alanı Esnekliği */
+.catalog-products-area {
+    width: 100%;
+}
+
+/* Sağ taraftaki ürün tablosunu 3 kolonlu yapıyoruz */
+.catalog-products-area .category-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Mobil Cihazlarda Düzenin Bozulmaması İçin (Responsive) */
+@media (max-width: 992px) {
+    .catalog-layout {
+        grid-template-columns: 1fr; /* Mobilde sol menü en üste yerleşir, ürünler altına gelir */
+        gap: 30px;
+    }
+    
+    .catalog-sidebar {
+        position: static; /* Mobilde yapışkan özelliği iptal */
+    }
+    
+    .catalog-products-area .category-products-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tabletlerde 2'li tablo */
+    }
+}
+
+@media (max-width: 576px) {
+    .catalog-products-area .category-products-grid {
+        grid-template-columns: 1fr; /* Cep telefonlarında alt alta tekli pencere */
+    }
+}
+/* --- Hakkımızda Sayfası CSS Ayarları --- */
+
+.about-hero {
+    padding: 160px 0 40px 0;
+    background-color: var(--bg-surface);
+    text-align: center;
+}
+
+.about-content-section {
+    padding: 60px 0 100px 0;
+}
+
+/* Okumayı kolaylaştırmak için yazıları çok genişletmeyen özel kapsayıcı */
+.small-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text-wrap {
+    margin-bottom: 50px;
+}
+
+.about-text-wrap p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+/* İlk paragrafın daha büyük ve çarpıcı durması için */
+.about-text-wrap .lead-text {
+    font-size: 20px;
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* Temiz Değer Kutuları */
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 40px;
+}
+
+.value-card {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.value-card h4 {
+    font-family: var(--font-heading);
+    color: var(--accent-tactical);
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.value-card p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Mobil Düzenleme */
+@media (max-width: 768px) {
+    .about-values-grid {
+        grid-template-columns: 1fr; /* Mobilde kutular alt alta */
+        gap: 15px;
+    }
+}
+/* ==========================================================================
+   KAPSAMLI MOBİL UYUMLULUK (RESPONSIVE) AYARLARI
+   ========================================================================== */
+
+/* Hamburger Menü Butonu (Bilgisayarda Gizli) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* KÜÇÜK EKRANLAR İÇİN (Maksimum 992px - Tablet ve Telefonlar) */
+@media (max-width: 992px) {
+    /* Header & Navigasyon Düzeni */
+    .header-wrap {
+        padding: 15px 0;
+    }
+
+    .menu-toggle {
+        display: flex; /* Mobilde hamburger butonunu göster */
+    }
+
+    /* Ana Menüyü Mobilde Tam Ekran Açılır Panel Yapıyoruz */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Menüyü ekranın sağ dışına gizle */
+        width: 70%;
+        height: 100vh;
+        background-color: rgba(18, 18, 18, 0.98);
+        border-left: 2px solid var(--accent-tactical);
+        padding: 100px 30px;
+        transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        z-index: 1000;
+    }
+
+    /* Menü Aktif Olduğunda İçeri Kayma Efekti */
+    .main-nav.active {
+        right: 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column; /* Linkleri alt alta diz */
+        gap: 25px;
+        align-items: flex-start;
+    }
+
+    .main-nav a {
+        font-size: 20px; /* Mobilde linkleri büyüt */
+        display: block;
+        width: 100%;
+    }
+
+    /* Açılır Menü (Dropdown) Mobilde Tıklayınca Açılsın */
+    .dropdown-menu {
+        position: static;
+        transform: none !important;
+        opacity: 1;
+        visibility: visible;
+        display: none; /* JS ile kontrol edilecek */
+        background-color: #151515;
+        margin-top: 10px;
+        padding: 5px 0;
+        box-shadow: none;
+        width: 100%;
+    }
+    
+    .dropdown.open .dropdown-menu {
+        display: block;
+    }
+
+    .header-action {
+        display: none; /* Mobilde kalabalık yapmaması için sağdaki butonu gizle */
+    }
+
+    /* Hamburger Menü Animasyonu (Butona basınca X işaretine dönüşür) */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Sayfa Düzenleri (Gridleri Tek Kolona Düşürme) */
+    .grid-two-col, 
+    .product-detail-grid, 
+    .catalog-layout, 
+    .service-row, 
+    .service-row.inverse {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+        direction: ltr !important;
+    }
+
+    /* Ortak Başlık Boyutları */
+    .hero-section h1 {
+        font-size: 36px !important;
+    }
+    h2 {
+        font-size: 28px !important;
+    }
+
+    /* Katalog & Kategori Sayfaları */
+    .products-grid, 
+    .category-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* Tabletlerde yan yana 2 pencere */
+        gap: 20px;
+    }
+
+    .catalog-sidebar {
+        position: static !important; /* Sabitliği kaldır */
+        width: 100%;
+    }
+    
+    .service-img-col {
+        order: 2; /* Hizmetlerde görseller mobilde hep altta kalsın */
+    }
+}
+
+/* CEP TELEFONLARI İÇİN (Maksimum 576px) */
+@media (max-width: 576px) {
+    .products-grid, 
+    .category-products-grid, 
+    .about-values-grid {
+        grid-template-columns: 1fr !important; /* Mobilde tamamen alt alta tekli pencere */
+    }
+
+    .hero-section {
+        padding: 140px 0 60px 0;
+        min-height: auto;
+    }
+
+    .hero-section h1 {
+        font-size: 32px !important;
+    }
+
+    .product-img-box, 
+    .cat-product-img {
+        height: 260px !important; /* Pencerelerin yüksekliğini mobilde optimize et */
+    }
+
+    .main-product-image img {
+        max-height: 350px;
+    }
+
+    .footer-wrap {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}

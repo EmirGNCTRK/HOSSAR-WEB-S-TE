@@ -75,3 +75,28 @@ if (zoomContainer && zoomImg) {
         zoomImg.style.transformOrigin = 'center center';
     });
 }
+// --- MOBİL HAMBURGER MENÜ OTOMASYONU ---
+const menuToggle = document.getElementById('mobile-menu');
+const mainNav = document.querySelector('.main-nav');
+
+if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', function() {
+        // Butonu ve menüyü aktif/pasif yap (Sağdan içeri kaydırır)
+        this.classList.toggle('active');
+        mainNav.classList.toggle('active');
+    });
+}
+
+// Mobilde "Ürünlerimiz" yazısına tıklayınca alt menünün açılması
+const dropdownToggle = document.querySelector('.dropdown-toggle');
+const dropdown = document.querySelector('.dropdown');
+
+if (dropdownToggle && dropdown) {
+    dropdownToggle.addEventListener('click', function(e) {
+        // Eğer ekran mobil boyuttaysa normal link gitmesini engelle, alt menüyü aç
+        if (window.innerWidth <= 992) {
+            e.preventDefault();
+            dropdown.classList.toggle('open');
+        }
+    });
+}
