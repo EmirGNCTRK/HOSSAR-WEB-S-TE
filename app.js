@@ -262,4 +262,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // --- 6. MOBİL KATALOG KATEGORİ AKORDEON SİSTEMİ ---
+    const catalogSidebar = document.querySelector('.catalog-sidebar');
+    
+    if (catalogSidebar) {
+        const sidebarTitle = catalogSidebar.querySelector('h3');
+        
+        if (sidebarTitle && window.innerWidth <= 768) {
+            // Mobilde başlangıçta kapalı olduğunu belirtmek için hazır tutuyoruz
+            sidebarTitle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // 'menu-open' sınıfını ekle/çıkar (toggle)
+                catalogSidebar.classList.toggle('menu-open');
+            });
+        }
+    }
+
 });
