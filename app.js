@@ -52,29 +52,116 @@ if (mainImg && thumbnails.length > 0) {
     });
 }
 
-// --- ÜRÜN DETAY BÜYÜTEÇ (ZOOM) OTOMASYONU ---
-const zoomContainer = document.querySelector('.zoom-container');
-const zoomImg = document.getElementById('current-product-img');
+// ==========================================================================
+// --- ÜRÜN DETAY ENTEGRE GALERİ, OKLAR, BÜYÜTEÇ VEYA LIGHTBOX MİMARİSİ ---
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const zoomContainer = document.querySelector('.zoom-container');
+    const mainImg = document.getElementById('current-product-img');
+    const thumbnails = document.querySelectorAll('.thumb-box');
+    const prevBtn = document.getElementById('prev-img-btn');
+    const nextBtn = document.getElementById('next-img-btn');
+    const lightbox = document.getElementById('mobile-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightbox = document.getElementById('close-lightbox-btn');
 
-if (zoomContainer && zoomImg) {
-    // Fare kutunun içinde hareket ettikçe koordinatları hesapla
-    zoomContainer.addEventListener('mousemove', function(e) {
-        // Kutunun ekrandaki konumunu al
-        const rect = e.target.getBoundingClientRect();
+    if (!mainImg || thumbnails.length === 0) return;
+
+    // Küçük resimlerin yollarını bir diziye (array) aktarıyoruz
+    const imgList = Array.from(thumbnails).map(thumb => thumb.querySelector('img').getAttribute('src'));
+    let currentIndex = 0;
+
+    // Resmi ve aktif kutuyu güncelleyen ortak fonksiyon
+    function updateGallery(index) {
+        currentIndex = index;
+        mainImg.setAttribute('src', imgList[currentIndex]);
         
-        // Farenin kutu içindeki X ve Y koordinatlarını yüzdeye çevir
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        
-        // Resmin büyüme merkezini (orijinini) farenin olduğu yere eşitle
-        zoomImg.style.transformOrigin = `${x}% ${y}%`;
+        thumbnails.forEach((box, i) => {
+            if (i === currentIndex) box.classList.add('active');
+            else box.classList.remove('active');
+        });
+    }
+
+    // ----------------------------------------------------------------------
+    // 1. MOUSE ZOOM (BÜYÜTEÇ) KODLARI (Milimetrik Koordinat Takibi)
+    // ----------------------------------------------------------------------
+    if (zoomContainer && mainImg) {
+        zoomContainer.addEventListener('mousemove', function(e) {
+            // Sadece bilgisayar ekranlarındayken (992px üstü) büyüteç çalışsnsın
+            if (window.innerWidth > 992) {
+                const rect = zoomContainer.getBoundingClientRect();
+                
+                // Sayfa kaydırılsa bile farenin kutu içindeki tam yerini hesaplar
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Koordinatları yüzdeye (0% - 100% arası) çeviriyoruz
+                const xPercent = (x / rect.width) * 100;
+                const yPercent = (y / rect.height) * 100;
+                
+                // Büyüme odağını farenin milimetrik olarak durduğu yere eşitliyoruz
+                mainImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+            }
+        });
+
+        // Fare kutudan çıkınca resmi eski normal merkezine döndür
+        zoomContainer.addEventListener('mouseleave', function() {
+            mainImg.style.transformOrigin = 'center center';
+        });
+    }
+
+    // ----------------------------------------------------------------------
+    // 2. SAĞ VE SOL OK TUŞLARI TETİKLEYİCİLERİ
+    // ----------------------------------------------------------------------
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Tıklamanın arkadaki Lightbox'ı açmasını engeller
+            let nextIndex = (currentIndex + 1) % imgList.length;
+            updateGallery(nextIndex);
+        });
+
+        prevBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Tıklamanın arkadaki Lightbox'ı açmasını engeller
+            let prevIndex = (currentIndex - 1 + imgList.length) % imgList.length;
+            updateGallery(prevIndex);
+        });
+    }
+
+    // Küçük resimlere (thumbnails) tıklayınca değişim
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener('click', function() {
+            updateGallery(index);
+        });
     });
 
-    // Fare kutudan çıktığında resmi eski normal merkezine geri döndür
-    zoomContainer.addEventListener('mouseleave', function() {
-        zoomImg.style.transformOrigin = 'center center';
+    // ----------------------------------------------------------------------
+    // 3. MOBİL LIGHTBOX (TAM EKRAN PENCERE)
+    // ----------------------------------------------------------------------
+    mainImg.addEventListener('click', function() {
+        // Eğer ekran mobil boyuttaysa (992px ve altı) lightbox'ı aç
+        if (window.innerWidth <= 992) {
+            lightboxImg.setAttribute('src', this.getAttribute('src'));
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Arka plan kaymasını engelle
+        }
     });
-}
+
+    if (closeLightbox && lightbox) {
+        // X butonuna basınca kapat
+        closeLightbox.addEventListener('click', function() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Kaymayı geri aç
+        });
+
+        // Siyah arka plana basınca da kapat
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+});
 // --- MOBİL HAMBURGER MENÜ OTOMASYONU ---
 const menuToggle = document.getElementById('mobile-menu');
 const mainNav = document.querySelector('.main-nav');

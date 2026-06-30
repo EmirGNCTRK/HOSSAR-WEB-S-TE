@@ -64,8 +64,8 @@
                 
                 <!-- Sol Taraf: Büyük Ürün Görseli -->
                 <!-- Sol Taraf: Ürün Görsel Galerisi -->
-                <div class="product-gallery-box">
-                    
+               <div class="product-gallery-box">
+    
                     <div class="product-breadcrumb">
                         <a href="tum-urunler.html">Ürünlerimiz</a> 
                         <span class="separator">/</span> 
@@ -73,7 +73,9 @@
                     </div>
 
                     <div class="main-product-image zoom-container">
+                        <button class="nav-arrow prev-arrow" id="prev-img-btn">&#10094;</button>
                         <img src="./images/2.jpeg" id="current-product-img" alt="Hossar Cobra Tokalı Premium Kemer">
+                        <button class="nav-arrow next-arrow" id="next-img-btn">&#10095;</button>
                     </div>
                     
                     <div class="product-thumbnails">
@@ -83,6 +85,10 @@
                     </div>
                 </div>
 
+                <div id="mobile-lightbox" class="lightbox-overlay">
+                    <span class="lightbox-close" id="close-lightbox-btn">&times;</span>
+                    <img class="lightbox-content" id="lightbox-img" src="" alt="Hossar Mobil Detay">
+                </div>
                 <!-- Sağ Taraf: Ürün Bilgileri ve İletişim Butonu -->
                 <div class="product-meta-box">
                     <span class="product-sku">STOK KODU: HSR-TAC-01</span>
