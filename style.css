@@ -303,3 +303,718 @@ h2 {
     .grid-blocks, .grid-two-col { grid-template-columns: 1fr; }
     .hero-actions { flex-direction: column; }
 }
+
+/* ... Önceki CSS Kodlarının Devamı (Aynen Kalacak) ... */
+
+/* Logo Görseli İçin Düzenleme */
+.header-logo-img {
+    height: 50px; /* Logonun Header yüksekliğine taşmaması için ideal boyut */
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* SEO için görünmez metin sınıfı (Sadece arama motoru botları okur) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Ürün Bloklarının Arka Plan Görsel Ayarları */
+.category-block {
+    height: 400px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    border: 1px solid #2a2a2a;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    
+    /* Yeni Eklenen Görsel Kuralları */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; /* Görselin alanı tamamen kaplamasını sağlar */
+}
+
+/* Görsellerin üzerindeki yazıların okunabilmesi için koyu katman (Overlay) */
+.block-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(18, 18, 18, 0.95) 20%, rgba(18, 18, 18, 0.4) 100%);
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.category-block:hover .block-overlay {
+    background: linear-gradient(to top, rgba(18, 18, 18, 0.98) 40%, rgba(18, 18, 18, 0.2) 100%);
+}
+
+/* ... Diğer CSS kodları aynen kalabilir ... */
+/* Açılır Menü (Dropdown) Tasarımı */
+.main-nav ul li {
+    position: relative; /* İçindeki alt menüyü hizalamak için gerekli */
+}
+
+/* Küçük aşağı ok işareti için */
+.arrow {
+    font-size: 11px;
+    margin-left: 3px;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+/* Üzerine gelindiğinde okun dönmesi */
+.dropdown:hover .arrow {
+    transform: rotate(180deg);
+    color: var(--accent-tactical);
+}
+
+/* Alt Menü Kutusu (Gizli Mod) */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px); /* Hafif aşağıda başlasın animasyon için */
+    background-color: #1a1a1a; /* Taktiksel koyu yüzey rengi */
+    border: 1px solid #2a2a2a;
+    border-top: 3px solid var(--accent-tactical); /* Üst tarafa ince gold/çöl çizgisi */
+    min-width: 180px;
+    padding: 10px 0;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+
+/* Alt menünün içindeki dikey listeleme */
+.main-nav .dropdown-menu {
+    flex-direction: column;
+    gap: 0;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+/* Alt Menü Linkleri */
+.dropdown-menu a {
+    color: var(--text-muted) !important;
+    font-family: var(--font-body); /* Alt menü linkleri daha okunabilir font olsun */
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 20px;
+    display: block;
+    width: 100%;
+    text-transform: none;
+    letter-spacing: 0;
+    transition: all 0.2s ease;
+}
+
+/* Alt menü linkine hover olunca */
+.dropdown-menu a:hover {
+    background-color: #222;
+    color: var(--accent-tactical) !important;
+    padding-left: 25px; /* Sağa doğru hafif kayma efekti */
+}
+
+/* ÜRÜNLERİMİZ Üzerine Gelindiğinde Alt Menüyü Göster */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(5px); /* Yumuşak bir yükselme efekti */
+}
+/* ... Önceki Genel ve Header Ayarları Aynen Kalıyor ... */
+
+/* Hero Section Ana Kapsayıcı */
+.hero-section {
+    position: relative;
+    padding: 180px 0 100px 0;
+    min-height: 90vh; /* Fotoğrafları daha iyi göstermek için yüksekliği biraz artırdık */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Arka Plandaki Slider Alanı */
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Her Bir Fotoğraf Katmanı */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Fotoğraflar arası yumuşak geçiş süresi */
+}
+
+/* Aktif Olan Fotoğrafı Göster */
+.slide.active {
+    opacity: 1;
+}
+
+/* Fotoğrafların Üstündeki Karartma Katmanı (Yazıların Okunabilirliği ve SEO İçin Şart) */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.9) 30%, rgba(18, 18, 18, 0.5) 100%);
+    z-index: 2;
+}
+
+/* İçeriği Slider Katmanlarının Üstüne Çıkarıyoruz */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 700px;
+}
+
+.hero-tag {
+    color: var(--accent-tactical);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-size: 14px;
+}
+
+.hero-section h1 {
+    font-family: var(--font-heading);
+    font-size: 56px;
+    line-height: 1.1;
+    margin: 15px 0;
+    color: #fff;
+}
+
+.hero-section .highlight {
+    color: transparent;
+    -webkit-text-stroke: 1px #fff;
+}
+
+.hero-section p {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/* ... Özellikler (Features) ve Dropdown CSS Kodları Aynen Kalıyor ... */
+/* --- İletişim Sayfası Tasarım Kuralları --- */
+
+.contact-hero {
+    padding: 160px 0 60px 0;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid #1a1a1a;
+    text-align: center;
+}
+
+.contact-section {
+    padding: 80px 0;
+}
+
+/* Bilgi Bloklarının Yapısı */
+.contact-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    font-style: normal; /* address etiketi italik yapmasın diye */
+}
+
+.info-icon {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border-left: 3px solid var(--accent-tactical); /* Taktik şerit çizgisi */
+}
+
+.info-text h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.info-text p, .info-text a {
+    color: var(--text-muted);
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.info-text a:hover {
+    color: var(--accent-tactical);
+}
+
+/* Harita Alanı ve Taktiksel Filtre */
+.contact-map-box {
+    position: relative;
+}
+
+.contact-map-box iframe {
+    display: block;
+    width: 100%;
+    /* filter: grayscale(1)... kodu haritayı Google'ın renkli halinden kurtarıp sitenin siyah/askeri havasına uydurur */
+}
+
+.contact-map-box blockquote {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Mobil Cihazlar İçin Ayar */
+@media (max-width: 768px) {
+    .contact-hero { padding: 140px 0 40px 0; }
+    .contact-section { padding: 40px 0; }
+    .contact-info-box { gap: 30px; margin-bottom: 40px; }
+}
+/* --- Ürünlerimiz Kataloğu CSS Ayarları --- */
+
+.products-catalog-section {
+    padding: 100px 0;
+    background-color: var(--bg-dark);
+}
+
+/* 3 Kolonlu Yan Yana Orta Boy Pencereler */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Ürün Kartı Genel Yapısı */
+.product-card {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
+}
+
+/* Görsel Kapsayıcı Pencere */
+.product-img-box {
+    width: 100%;
+    height: 320px; /* Orta boy pencere yüksekliği */
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+.product-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resmi ezmeden alanı doldurur */
+    transition: transform 0.5s ease;
+}
+
+/* Yeni Ürün vb. Etiketler İçin */
+.product-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--accent-tactical);
+    color: #121212;
+    font-family: var(--font-heading);
+    font-weight: bold;
+    font-size: 12px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Kart İçeriği */
+.product-info {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+}
+
+.product-cat {
+    color: var(--accent-tactical);
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: var(--font-body);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.view-details {
+    margin-top: auto; /* Yazıyı her zaman kartın en altına sabitler */
+    font-family: var(--font-heading);
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+/* Hover (Üzerine Gelindiğinde) Efektleri */
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-tactical);
+}
+
+.product-card:hover .product-img-box img {
+    transform: scale(1.08); /* Fotoğraf pencere içinde hafifçe büyür */
+}
+
+.product-card:hover .view-details {
+    color: var(--accent-tactical);
+}
+
+/* Mobil Ekran Uyumluluğu */
+@media (max-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tabletlerde 2'li düzen */
+    }
+}
+
+@media (max-width: 576px) {
+    .products-grid {
+        grid-template-columns: 1fr; /* Mobilde tekli alt alta düzen */
+    }
+    .product-img-box {
+        height: 280px;
+    }
+}
+/* --- Taktik Kemerler Kategori Sayfası CSS Kuralları --- */
+
+.category-hero {
+    padding: 160px 0 60px 0;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid #1a1a1a;
+    text-align: center;
+}
+
+.category-desc {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 15px auto 0 auto;
+    font-size: 16px;
+}
+
+.category-products-section {
+    padding: 80px 0;
+}
+
+/* Tablo Görünümü Oluşturan Grid Yapısı (Yan yana 3 orta boy pencere) */
+.category-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Kategori Sayfası Özel Ürün Kartı */
+.cat-product-card {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Üst Kısımdaki Resim Penceresi */
+.cat-product-img {
+    width: 100%;
+    height: 300px; /* İstediğin ideal orta boy yüksekliği */
+    overflow: hidden;
+    background-color: #000;
+}
+
+.cat-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Alttaki Ürün İsmi Alanı */
+.cat-product-info {
+    padding: 20px;
+    text-align: center; /* İsmi ortalayarak daha şık görünmesini sağladık */
+    background-color: #161616;
+    border-top: 1px solid #2a2a2a;
+}
+
+.cat-product-info h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+
+/* Hover Efektleri */
+.cat-product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-tactical);
+}
+
+.cat-product-card:hover .cat-product-img img {
+    transform: scale(1.05);
+}
+
+.cat-product-card:hover .cat-product-info h3 {
+    color: var(--accent-tactical); /* Üzerine gelince sadece ürün ismi gold/çöl rengi olur */
+}
+
+/* Ekran Boyutuna Göre Tablonun Daralması (Responsive) */
+@media (max-width: 992px) {
+    .category-products-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tabletlerde 2'li tablo */
+    }
+}
+
+@media (max-width: 576px) {
+    .category-products-grid {
+        grid-template-columns: 1fr; /* Mobilde tekli liste */
+    }
+    .cat-product-img {
+        height: 260px;
+    }
+}
+/* --- Ürün Detay Sayfası CSS Kuralları --- */
+
+.product-detail-page {
+    padding: 160px 0 80px 0;
+    background-color: var(--bg-dark);
+}
+
+/* Sol-Sağ Dağılımı Sağlayan Grid */
+.product-detail-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Sol taraf (görsel) biraz daha geniş */
+    gap: 50px;
+    align-items: start;
+}
+
+/* Sol Bölüm: Görsel Kutusu */
+.main-product-image {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-product-image img {
+    width: 100%;
+    height: auto;
+    max-height: 550px;
+    object-fit: contain; /* Görsel kalitesini korur */
+}
+
+/* Sağ Bölüm: Detaylar */
+.product-meta-box {
+    padding-top: 10px;
+}
+
+.product-sku {
+    color: var(--accent-tactical);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.product-title {
+    font-family: var(--font-heading);
+    font-size: 38px;
+    color: #fff;
+    margin: 10px 0 15px 0;
+    line-height: 1.2;
+}
+
+.product-price-placeholder {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--text-muted);
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.product-description-short {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* İletişim Aksiyon Alanı */
+.product-action-area {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid var(--accent-tactical);
+    padding: 25px;
+    margin-bottom: 35px;
+}
+
+.action-notice {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.btn-block-action {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Teknik Bilgi Listesi */
+.quick-specs h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.quick-specs ul {
+    list-style: none;
+}
+
+.quick-specs li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 10px 0;
+    border-bottom: 1px dashed #2a2a2a;
+}
+
+.quick-specs li strong {
+    color: #fff;
+    width: 140px;
+    display: inline-block;
+}
+
+/* Mobil Tasarım Esnekliği */
+@media (max-width: 992px) {
+    .product-detail-grid {
+        grid-template-columns: 1fr; /* Mobilde alt alta gelirler */
+        gap: 30px;
+    }
+    .product-title {
+        font-size: 30px;
+    }
+}
+/* --- Ürün Detay Galeri CSS Ayarları --- */
+
+.product-gallery-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Ana resim ile küçük resimler arasındaki boşluk */
+}
+
+/* Küçük Pencerelerin Yan Yana Dizilimi */
+.product-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 resim için yan yana 3 eşit kutu */
+    gap: 15px;
+}
+
+.thumb-box {
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    height: 100px; /* Küçük pencere yüksekliği */
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resmi ezmeden kutuya sığdırır */
+}
+
+/* Üzerine gelindiğinde veya o resim aktifken sınır rengi çöl rengi olsun */
+.thumb-box:hover, .thumb-box.active {
+    border-color: var(--accent-tactical);
+    background-color: #222;
+}
+
+/* Mobil için küçük kutuların yüksekliğini biraz daraltalım */
+@media (max-width: 576px) {
+    .thumb-box {
+        height: 70px;
+    }
+}
+/* --- Büyüteç (Zoom) Efekti CSS Ayarları --- */
+
+.zoom-container {
+    position: relative;
+    overflow: hidden; /* Büyüyen resmin kutudan taşmasını engeller */
+    cursor: zoom-in;  /* Fare imlecini büyüteç işaretine dönüştürür */
+}
+
+.zoom-container img {
+    transition: transform 0.1s ease-out; /* Hareketin yumuşak olması için kısa bir geçiş */
+    transform-origin: center center; /* Varsayılan olarak merkezden başlar */
+}
+
+/* Fare üzerine geldiğinde resmin ölçeğini (2 kat) artırıyoruz */
+.zoom-container:hover img {
+    transform: scale(2);
+}
