@@ -41,10 +41,31 @@ body {
 }
 
 .header-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 80px !important; /* Header yüksekliği */
+}
+
+.logo, .logo a {
+    display: block !important;
+    height: 80px !important; /* Header ile sıfıra sıfır olması için aynı yükseklik */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.header-logo-img {
+    height: 100% !important; /* Kapsayıcısının tüm yüksekliğini kapla */
+    width: auto !important;
+    display: block !important;
+    object-fit: cover !important; /* Resmi ezmeden kutuya sıfırla */
+}
+
+/* JavaScript ile çalışan kaydırma (scroll) efektinin bozulmaması için bu kısmı da güncelliyoruz */
+window-scroll-efekti {
+    /* app.js'deki scroll fonksiyonu tetiklendiğinde padding yerine yüksekliği koruyoruz */
 }
 
 .logo-text {
@@ -1466,5 +1487,79 @@ h2 {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+    }
+}
+/* --- Ana Sayfa Giriş Metni ve Alt İletişim Bandı CSS Ayarları --- */
+
+/* Üst Kısımdaki Bilgilendirici Metin Kutusu */
+.products-intro-block {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--bg-surface);
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid var(--accent-tactical); /* Sol tarafa imza gold şeridi */
+    padding: 35px;
+}
+
+.intro-text {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-top: 15px;
+    font-family: var(--font-body);
+}
+
+/* En Alttaki Küçük İletişim Bandı */
+.quick-contact-bar {
+    background-color: #161616;
+    border-top: 1px solid #2a2a2a;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 25px 0;
+}
+
+.quick-contact-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.contact-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.contact-bar-item .icon {
+    font-size: 18px;
+    color: var(--accent-tactical);
+}
+
+.contact-bar-item p, .contact-bar-item a {
+    color: var(--text-muted);
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.contact-bar-item a:hover {
+    color: var(--accent-tactical);
+}
+
+/* --- Bu Yeni Alanların Mobil Uyumluluk Kuralları --- */
+@media (max-width: 992px) {
+    .quick-contact-wrap {
+        flex-direction: column; /* Mobilde bilgileri alt alta diz */
+        align-items: flex-start;
+        gap: 15px;
+        padding-left: 10px;
+    }
+    .products-intro-block {
+        padding: 25px;
+    }
+    .intro-text {
+        font-size: 15px;
     }
 }

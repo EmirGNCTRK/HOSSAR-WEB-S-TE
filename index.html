@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOSSAR Tactical | Dayanıklı ve Profesyonel Taktiksel Kemerler</title>
+    <link rel="icon" type="image/png" href="./images/mini logo.png">
     <meta name="description" content="Hossar Tactical Belts: Duty, Security ve Outdoor koşulları için tasarlanmış high-end taktiksel kemer ve ekipmanlar. Türkiye'de üretilmiştir.">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,11 +17,12 @@
     <header class="site-header">
         <div class="container header-wrap">
             <div class="logo">
-                <a href="index.html">
+                <a href="#home">
                     <img src="./images/logo.jpeg" alt="HOSSAR Tactical Logo" class="header-logo-img">
                 </a>
+                <h1 class="sr-only">HOSSAR Tactical Belts</h1>
             </div>
-            <!-- Tüm sayfalardaki .logo divinin hemen altına gelecek olan buton -->
+            <!-- Mobil Hamburger Menü Butonu (Önceki adımda eklediğimiz yer) -->
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -28,9 +30,9 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="#home" class="active">Ana Sayfa</a></li>
                     <li class="dropdown">
-                        <a href="tum-urunler.html" class="dropdown-toggle active">Ürünlerimiz <span class="arrow">&#9662;</span></a>
+                        <a href="tum-urunler.html" class="dropdown-toggle">Ürünlerimiz <span class="arrow">&#9662;</span></a>
                         <ul class="dropdown-menu">
                             <li><a href="tum-urunler.html">Tüm Ürünler</a></li>
                             <li><a href="taktik-kemerler.html">Taktik Kemerler</a></li>
@@ -44,7 +46,7 @@
                 </ul>
             </nav>
             <div class="header-action">
-                <a href="tum-urunler.html" class="btn btn-outline">Tüm Ürünler</a>
+                <a href="tum-urunler.html" class="btn btn-outline">Ürünleri İncele</a>
             </div>
         </div>
     </header>
@@ -69,19 +71,26 @@
             </div>
         </section>
 
-        <!-- YENİ ÜRÜNLERİMİZ BÖLÜMÜ (Orta Boy Pencereli Katalog Yapısı) -->
+        <!-- YENİ ÜRÜNLERİMİZ BÖLÜMÜ (Bilgilendirici Metin Ekli) -->
         <section id="products" class="products-catalog-section">
             <div class="container">
-                <div class="section-title-wrap">
-                    <span class="subtitle">PROFESYONEL EKİPMANLAR</span>
-                    <h2>ÜRÜNLERİMİZ</h2>
+                
+                <!-- Üst Kısımdaki Yeni Bilgilendirici Metin Alanı -->
+                <div class="products-intro-block">
+                    <span class="subtitle">PROFESYONEL STANDARTLAR</span>
+                    <p class="intro-text">
+                        Hossar Tactical olarak, operasyon sahalarından ve zorlu doğa koşullarından edindiğimiz tecrübeleri modern üretim teknolojileriyle birleştiriyoruz. Taktiksel donanımlarımızda kullanılan yüksek mukavemetli cordura dokumalar ve yük altında dahi açılmayan kilit mekanizmaları, tavizsiz bir güvenlik nizamı sunmak için tasarlanmıştır. Her bir ürünümüz, endüstriyel Ar-Ge süreçlerinden geçerek en yüksek dayanıklılık standartlarında üretilmektedir.
+                    </p>
                 </div>
 
-                <!-- 3'lü Grid Düzeni (Orta Boy Pencereler) -->
+                <div class="section-title-wrap" style="margin-top: 60px; margin-bottom: 30px;">
+                    <h2>YENİ ÜRÜNLERİMİZ</h2>
+                </div>
+
+                <!-- 3'lü Grid Düzeni -->
                 <div class="products-grid">
-                    
-                    <!-- Ürün 1: Taktik Kemer (Görsel olarak 2.jpeg kullanıldı) -->
-                    <a href="./urun-detay.html" class="product-card">
+                    <!-- Ürün 1 -->
+                    <a href="urun-detay.html" class="product-card">
                         <div class="product-img-box">
                             <img src="./images/2.jpeg" alt="Hossar Taktik Kemer">
                             <span class="product-badge">Yeni Ürün</span>
@@ -93,8 +102,8 @@
                         </div>
                     </a>
 
-                    <!-- Ürün 2: Taktik Cep (İleride görseli değiştirebilirsin, şimdilik 3.jpeg) -->
-                    <a href="./urun-detay.html" class="product-card">
+                    <!-- Ürün 2 -->
+                    <a href="urun-detay.html" class="product-card">
                         <div class="product-img-box">
                             <img src="./images/3.jpeg" alt="Hossar Modüler Cep">
                         </div>
@@ -105,8 +114,8 @@
                         </div>
                     </a>
 
-                    <!-- Ürün 3: Taktik Çanta (Şimdilik 1.jpeg) -->
-                    <a href="./urun-detay.html" class="product-card">
+                    <!-- Ürün 3 -->
+                    <a href="urun-detay.html" class="product-card">
                         <div class="product-img-box">
                             <img src="./images/1.jpeg" alt="Hossar Operasyonel Çanta">
                         </div>
@@ -116,12 +125,30 @@
                             <span class="view-details">Detayları İncele &rarr;</span>
                         </div>
                     </a>
+                </div>
+            </div>
+        </section>
 
+        <!-- EN ALTAKİ KÜÇÜK İLETİŞİM BİLGİ BANDI -->
+        <section class="quick-contact-bar">
+            <div class="container quick-contact-wrap">
+                <div class="contact-bar-item">
+                    <span class="icon">📍</span>
+                    <p>İkitelli OSB, Metal İş Sanayi Sitesi, Başakşehir / İstanbul</p>
+                </div>
+                <div class="contact-bar-item">
+                    <span class="icon">📞</span>
+                    <p><a href="tel:+902125554433">+90 (212) 555 44 33</a></p>
+                </div>
+                <div class="contact-bar-item">
+                    <span class="icon">✉️</span>
+                    <p><a href="mailto:info@hossar.com.tr">info@hossar.com.tr</a></p>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-wrap">
             <div class="footer-info">
