@@ -1748,3 +1748,80 @@ h2 {
         margin-bottom: 8px;
     }
 }
+/* ==========================================================================
+   YÜKLEME EKRANI (PRELOADER) TASARIM KURALLARI
+   ========================================================================= */
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(245, 245, 245, 0.96); /* İstediğin hafif beyaz arka plan (Göz yormayan Premium Mat Beyaz) */
+    z-index: 99999; /* Sitedeki her şeyin en üstünde durması için en yüksek değer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* Kapanırken yumuşakça kaybolma efekti */
+}
+
+/* Logo ve Halkayı İçine Alan Kapsayıcı */
+.loader-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ortadaki Sabit Mini Logo */
+.loader-logo {
+    width: 60px; /* Logonun boyutu */
+    height: auto;
+    z-index: 2;
+    object-fit: contain;
+}
+
+/* Etrafta Dönecek Olan Halkanın Yapısı */
+.loader-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid #e0e0e0; /* Halkanın dönmeyen sönük arka plan çizgisi */
+    border-top: 3px solid var(--accent-tactical); /* Dönen gold/çöl rengi taktiksel şerit */
+    border-radius: 50%; /* Kusursuz bir daire yapar */
+    z-index: 1;
+    /* "spin" adını verdiğimiz animasyonu 1 saniyede sonsuza kadar döndür diyoruz */
+    animation: spin 1s linear infinite; 
+}
+
+/* HALKAYI DÖNDÜREN SİHİRLİ MATEMATİKSEL ANİMASYON (360 Derece Dönüş) */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Sayfa yüklendiğinde JS ile tetiklenecek ve preloader'ı kapatacak sınıf */
+#preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+/* Ortadaki Sabit Mini Logo ve Siyah Çember Arka Planı */
+.loader-logo {
+    width: 65px; /* Logonun çember içinde şık durması için boyutunu hafifçe optimize ettik */
+    height: 65px;
+    z-index: 2;
+    object-fit: contain;
+    
+    /* İSTEDİĞİN SİYAH ÇEMBER EKLEMELERİ */
+    background-color: #0e0e0e; /* Saf ve asil bir siyah arka plan */
+    border-radius: 50%; /* Kusursuz bir çember (daire) şekli verir */
+    padding: 10px; /* Logonun siyah çemberin kenarlarına sıfır yapışmaması için iç boşluk */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Çembere derinlik katan hafif bir gölge */
+}

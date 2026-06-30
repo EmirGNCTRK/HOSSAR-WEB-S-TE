@@ -109,3 +109,17 @@ window.addEventListener('scroll', () => {
         header.style.boxShadow = 'none';
     }
 });
+// --- PRELOADER (YÜKLEME EKRANI) OTOMASYONU ---
+// 'load' tetikleyicisi, sayfadaki tüm resimler ve dosyalar %100 yüklenince devreye girer
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Yumuşak kapanma sınıfını ekle (CSS'teki opacity:0 devreye girer)
+        preloader.classList.add('fade-out');
+        
+        // Animasyon bitiminde (0.5 saniye sonra) elementi tamamen arkadan temizle
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    }
+});
