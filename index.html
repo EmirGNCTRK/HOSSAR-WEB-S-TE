@@ -80,57 +80,116 @@
         <section id="products" class="products-catalog-section">
             <div class="container">
                 
-                <!-- Üst Kısımdaki Yeni Bilgilendirici Metin Alanı -->
                 <div class="products-intro-block">
                     <span class="subtitle">PROFESYONEL STANDARTLAR</span>
                     <p class="intro-text">
-                        Hossar Tactical olarak, operasyon sahalarından ve zorlu doğa koşullarından edindiğimiz tecrübeleri modern üretim teknolojileriyle birleştiriyoruz. Taktiksel donanımlarımızda kullanılan yüksek mukavemetli cordura dokumalar ve yük altında dahi açılmayan kilit mekanizmaları, tavizsiz bir güvenlik nizamı sunmak için tasarlanmıştır. Her bir ürünümüz, endüstriyel Ar-Ge süreçlerinden geçerek en yüksek dayanıklılık standartlarında üretilmektedir.
+                        Hossar Tactical olarak, operasyon sahalarından ve zorlu doğa koşullarından edindiğimiz tecrübeleri modern üretim teknolojileriyle birleştiriyoruz...
                     </p>
                 </div>
 
-                <div class="section-title-wrap" style="margin-top: 60px; margin-bottom: 30px;">
+                <div class="section-title-wrap carousel-header">
                     <h2>YENİ ÜRÜNLERİMİZ</h2>
+                    <div class="carousel-nav-buttons">
+                        <button class="carousel-btn prev-carousel" id="btn-carousel-prev">&#10094;</button>
+                        <button class="carousel-btn next-carousel" id="btn-carousel-next">&#10095;</button>
+                    </div>
                 </div>
 
-                <!-- 3'lü Grid Düzeni -->
-                <div class="products-grid">
-                    <!-- Ürün 1 -->
-                    <a href="urun-detay.html" class="product-card">
-                        <div class="product-img-box">
-                            <img src="./images/2.jpeg" alt="Hossar Taktik Kemer">
-                            <span class="product-badge">Yeni Ürün</span>
-                        </div>
-                        <div class="product-info">
-                            <h3>Hossar Cobra Tokalı Taktik Kemer</h3>
-                            <p class="product-cat">Taktik Kemerler</p>
-                            <span class="view-details">Detayları İncele &rarr;</span>
-                        </div>
-                    </a>
+                <div class="products-carousel-wrapper">
+                    <div class="products-grid carousel-track" id="new-products-track">
+                        
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/2.jpeg" alt="Hossar Taktik Kemer" draggable="false">
+                                <span class="product-badge">Yeni Ürün</span>
+                            </div>
+                            <div class="product-info">
+                                <h3>Hossar Cobra Tokalı Taktik Kemer</h3>
+                                <p class="product-cat">Taktik Kemerler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
 
-                    <!-- Ürün 2 -->
-                    <a href="urun-detay.html" class="product-card">
-                        <div class="product-img-box">
-                            <img src="./images/3.jpeg" alt="Hossar Modüler Cep">
-                        </div>
-                        <div class="product-info">
-                            <h3>Modüler Taktik Görev Cebi</h3>
-                            <p class="product-cat">Taktik Cepler</p>
-                            <span class="view-details">Detayları İncele &rarr;</span>
-                        </div>
-                    </a>
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/3.jpeg" alt="Hossar Modüler Cep" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Modüler Taktik Görev Cebi</h3>
+                                <p class="product-cat">Taktik Cepler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
 
-                    <!-- Ürün 3 -->
-                    <a href="urun-detay.html" class="product-card">
-                        <div class="product-img-box">
-                            <img src="./images/1.jpeg" alt="Hossar Operasyonel Çanta">
-                        </div>
-                        <div class="product-info">
-                            <h3>Operasyonel Görev ve Sırt Çantası</h3>
-                            <p class="product-cat">Taktik Çantalar</p>
-                            <span class="view-details">Detayları İncele &rarr;</span>
-                        </div>
-                    </a>
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/1.jpeg" alt="Hossar Operasyonel Çanta" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Operasyonel Görev ve Sırt Çantası</h3>
+                                <p class="product-cat">Taktik Çantalar</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/8.png" alt="Hossar Premium Kemer" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Hossar Minimalist Avcı Kemeri</h3>
+                                <p class="product-cat">Taktik Kemerler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/6.png" alt="Hossar Taktik Kemer" draggable="false">
+                                <span class="product-badge">Yeni Ürün</span>
+                            </div>
+                            <div class="product-info">
+                                <h3>Hossar Cobra Tokalı Taktik Kemer</h3>
+                                <p class="product-cat">Taktik Kemerler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/3.jpeg" alt="Hossar Modüler Cep" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Modüler Taktik Görev Cebi</h3>
+                                <p class="product-cat">Taktik Cepler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/4.png" alt="Hossar Operasyonel Çanta" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Operasyonel Görev ve Sırt Çantası</h3>
+                                <p class="product-cat">Taktik Çantalar</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+
+                        <a href="urun-detay.html" class="product-card" draggable="false">
+                            <div class="product-img-box">
+                                <img src="./images/5.jpg" alt="Hossar Premium Kemer" draggable="false">
+                            </div>
+                            <div class="product-info">
+                                <h3>Hossar Minimalist Avcı Kemeri</h3>
+                                <p class="product-cat">Taktik Kemerler</p>
+                                <span class="view-details">Detayları İncele &rarr;</span>
+                            </div>
+                        </a>
+
+                    </div>
                 </div>
+
             </div>
         </section>
 

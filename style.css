@@ -1982,3 +1982,97 @@ h2 {
     }
 
 }
+/* --- Yeni Ürünler Sağa Sola Kayan Vitrin (Carousel) Tasarımı --- */
+
+.carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+.carousel-nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Kaydırma Butonları */
+.carousel-btn {
+    background-color: #161616;
+    color: #fff;
+    border: 1px solid #2a2a2a;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background-color: var(--accent-tactical);
+    color: #000;
+    border-color: var(--accent-tactical);
+}
+
+/* Taşmayı Önleyen Ana Kapsayıcı */
+.products-carousel-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Mobilde parmakla kaydırma izni */
+    scroll-behavior: smooth; /* Butonlara basınca pürüzsüz akış */
+    scrollbar-width: none; /* Firefox için kaydırma çubuğunu gizle */
+}
+
+/* Chrome, Safari ve Edge için alt kaydırma çubuğunu tamamen gizleme */
+.products-carousel-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ürünleri Yan Yana Dizen Ray Sistemi */
+.products-grid.carousel-track {
+    display: flex !important; /* Grid yapısından esnek yan yana yapıya geçtik */
+    grid-template-columns: none !important; /* Eski 3'lü kısıtlamayı ezdik */
+    gap: 25px !important;
+    padding: 10px 5px;
+    width: max-content; /* İçerik uzunluğuna göre rayı esnetir */
+}
+
+/* Vitrindeki her bir ürün kartının sabit genişliği */
+.products-grid.carousel-track .product-card {
+    width: 320px !important; /* Kartların ekranda çok küçülmesini engeller */
+    flex-shrink: 0 !important; /* Kartların daralmasını engeller */
+}
+
+/* Mobil Ekran Düzenlemeleri */
+@media (max-width: 992px) {
+    .carousel-header {
+        margin-top: 40px;
+    }
+    .carousel-nav-buttons {
+        display: none; /* Mobilde butonlar yerine parmakla kaydırma (swipe) kullanılacağı için gizliyoruz */
+    }
+    .products-grid.carousel-track .product-card {
+        width: 260px !important; /* Mobilde kartları biraz daha kibarlaştırdık */
+    }
+}
+/* --- Sürüklenebilir Carousel İmleç Ayarları --- */
+
+.products-carousel-wrapper {
+    cursor: grab; /* Fare üzerindeyken açık el imleci */
+    user-select: none; /* Sürüklerken ürün yazılarının ve resimlerinin maviye boyanarak seçilmesini engeller */
+}
+
+.products-carousel-wrapper:active {
+    cursor: grabbing; /* Fareyle basılı tutulduğunda kavrayan el imleci */
+}
+
+/* Sürükleme esnasında resimlerin tarayıcıyı kilitlemesini engelliyoruz */
+.products-carousel-wrapper img {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: auto !important; /* Resme tıklanabilmesini ama sürüklenememesini sağlar */
+    user-select: none !important;
+}

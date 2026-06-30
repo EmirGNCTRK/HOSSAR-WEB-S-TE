@@ -86,6 +86,60 @@ document.addEventListener('DOMContentLoaded', function() {
             slides[currentSlide].classList.add('active');
         }, 5000); // 5 saniyede bir değişim (Önceki 500ms çok hızlıydı, 5000ms yaptık)
     }
+    // --- 3B. FARE İLE RESİM ÜZERİNDEN SÜRÜKLENEBİLİR CAROUSEL (KESİN ÇÖZÜM) ---
+    const slider = document.querySelector('.products-carousel-wrapper');
+    const btnPrev = document.getElementById('btn-carousel-prev');
+    const btnNext = document.getElementById('btn-carousel-next');
+
+    if (slider) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        const scrollAmount = 345;
+
+        // Ok Butonları
+        if (btnNext && btnPrev) {
+            btnNext.addEventListener('click', function() { slider.scrollLeft += scrollAmount; });
+            btnPrev.addEventListener('click', function() { slider.scrollLeft -= scrollAmount; });
+        }
+
+        // 1. Tıklama Anı (Resim veya yazı fark etmeksizin)
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            
+            // Sayfa kaydırılsa bile koordinatın bozulmaması için pageX kullanıyoruz
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        // 2. Farenin Carousel Alanından Çıkması
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        // 3. Fareyi Bırakma Anı
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        // 4. Sürükleme Anı (Resmin üzerindeyken bile kesintisiz çalışır)
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault(); // Tarayıcının resmi dışarı sürükleme huyunu kesin olarak durdurur
+            
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 1.5; // Sürükleme akıcılık hızı
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        // Ekstra Güvenlik: Kartların içindeki resimlerin orijinal sürükleme eventlerini JS ile de iptal ediyoruz
+        slider.querySelectorAll('img').forEach(img => {
+            img.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+    }
 
 
     // --- 4. ÜRÜN DETAY GALERİ, OKLAR, BÜYÜTEÇ VE LIGHTBOX SİSTEMİ ---
