@@ -110,16 +110,48 @@ window.addEventListener('scroll', () => {
     }
 });
 // --- PRELOADER (YÜKLEME EKRANI) OTOMASYONU ---
-// 'load' tetikleyicisi, sayfadaki tüm resimler ve dosyalar %100 yüklenince devreye girer
+// --- GELİŞMİŞ SAYFA GEÇİŞ VE PRELOADER OTOMASYONU ---
+
+// 1. Sayfa İlk Açıldığında Yükleme Ekranını Kapatma (Giriş)
 window.addEventListener('load', function() {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Yumuşak kapanma sınıfını ekle (CSS'teki opacity:0 devreye girer)
         preloader.classList.add('fade-out');
-        
-        // Animasyon bitiminde (0.5 saniye sonra) elementi tamamen arkadan temizle
         setTimeout(() => {
             preloader.style.display = 'none';
         }, 500);
     }
+});
+
+// 2. Bir Linke Tıklandığında Sayfadan Ayrılmadan Önce Yükleme Ekranını Açma (Çıkış)
+document.addEventListener('DOMContentLoaded', function() {
+    const preloader = document.getElementById('preloader');
+    
+    // Sitedeki tüm iç linkleri buluyoruz
+    const links = document.querySelectorAll('a');
+    
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Eğer tıklandığında sayfa dışına giden gerçek bir linkse ve sayfa içi pencerelere (#) gitmiyorsa
+            if (href && !href.startsWith('#') && !href.startsWith('javascript') && this.target !== '_blank') {
+                
+                // Varsayılan sayfa geçişini saliseliğine durdur
+                e.preventDefault();
+                
+                // Yükleme ekranını tekrar görünür yap ve beyazlığı aç
+                preloader.style.display = 'flex';
+                // Küçük bir gecikmeyle görünürlük efektini (opacity) tetikle
+                setTimeout(() => {
+                    preloader.classList.remove('fade-out');
+                }, 10);
+                
+                // Çeyrek saniye (250ms) sonra yeni sayfaya yönlendir (Bu sırada kullanıcı halkanın döndüğünü görecek)
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 250); 
+            }
+        });
+    });
 });
